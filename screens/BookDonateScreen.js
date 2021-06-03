@@ -15,9 +15,11 @@ export default class BookDonateScreen extends Component{
         this.requestRef=db.collection("requested_books")
         .onSnapshot((snapshot)=>{
             var requestedBooksList=snapshot.docs.map(document=>document.data())
-            this.setState={
+            this.setState({
                 requestedBooksList:requestedBooksList
-            }
+            })
+               
+            
         })
     }
     componentDidMount(){
@@ -27,13 +29,13 @@ export default class BookDonateScreen extends Component{
         this.requestRef()
     }
     keyExtractor=(item,index)=>index.toString()
-    renderItem=({item,i})=>{
+    /*renderItem=({item,i})=>{
         return(
             <ListItem
                 key={i}
                 title={item.book_name}
                 subtitle={item.reason_to_request}
-                titleStyle={{color:'black',fontWeight:'bold'}}
+                titleStyle={{color:'black'}}
                 rightElement={
                     <TouchableOpacity style={styles.button}>
                         <Text style={{color:'#fff'}}>View</Text>
@@ -43,7 +45,24 @@ export default class BookDonateScreen extends Component{
 
             />
         )
-    }
+    }*/
+    renderItem = ({ item }) => (
+        <ListItem bottomDivider>
+          <ListItem.Content>
+          <View style = {{flexDirection:'row'}}>
+              <View>
+                <ListItem.Title>{"Book: "+item.book_name}</ListItem.Title>
+                <ListItem.Subtitle>{"Reason: "+item.reason_to_request}</ListItem.Subtitle>
+              </View>
+                <TouchableOpacity style={styles.button}>
+                    <Text style={{color:'#ffff'}}>View</Text>
+                </TouchableOpacity>
+            </View>
+                
+            
+          </ListItem.Content>
+        </ListItem>
+      )
     render(){
         return(
             <View style={{flex:1}}>
